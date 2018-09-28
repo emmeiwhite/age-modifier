@@ -8,20 +8,26 @@ class AgeModifier extends Component{
     render(){
         return(
             <div>
-                <div className="jumbotron"><h3>0000</h3></div>
-                <button className="btn btn-primary ">Increase Age</button>
-                <button className="btn btn-primary">Decrease Age</button>
+                <div className="jumbotron"><h3>{this.props.age}</h3></div>
+                <button className="btn btn-primary" onClick={this.props.increaseAge}>Increase Age</button> 
+                <button className="btn btn-primary" onClick={this.props.decreaseAge}>Decrease Age</button>
             </div>
         )
     }
 }
 
 
-mapDispatchToProps = (dispatch)=>{ // We get our actions as props in this Container. Dispacthing Action Mechanism
+const mapDispatchToProps = (dispatch)=>{ // We get our actions as props in this Container. Dispacthing Action Mechanism
     return{
-        increaseAge: ()=>dispatch({type:'INCREASE'}),
+        increaseAge: ()=>dispatch({type:'INCREASE'}), // Later we will see how to use action creators, by using bindActionCreator
         decreaseAge: ()=>dispatch({type:'DECREASE'})
     }
 }
 
-export default AgeModifier;
+const mapStateToProps = (state)=>{
+    return {
+        age:state.age
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AgeModifier);
